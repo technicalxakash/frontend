@@ -18,8 +18,16 @@ export default defineConfig({
   },
    server: {
     host: true,
-    allowedHosts: ['.trycloudflare.com']
+    allowedHosts: ['.trycloudflare.com'],
+    proxy: {
+      '/api': {
+        target: 'https://backend-render-6n5z.onrender.com/',
+        changeOrigin: true,
+      }
+    }
   }
 });
+    
+
 
 

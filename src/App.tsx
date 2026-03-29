@@ -59,10 +59,10 @@ function App() {
 useEffect(() => {
   const loadData = async () => {
     const [schools, classes, students, teachers] = await Promise.all([
-      fetch("https://backend-render-6n5z.onrender.com/schools").then(r => r.json()),
-      fetch("https://backend-render-6n5z.onrender.com/classes").then(r => r.json()),
-      fetch("https://backend-render-6n5z.onrender.com/students").then(r => r.json()),
-      fetch("https://backend-render-6n5z.onrender.com/teachers").then(r => r.json())
+      fetch("/api/schools").then(r => r.json()),
+      fetch("/api/classes").then(r => r.json()),
+      fetch("/api/students").then(r => r.json()),
+      fetch("/api/teachers").then(r => r.json())
     ]);
 
     setState(prev => ({
@@ -105,7 +105,7 @@ const [studentForm, setStudentForm] = useState({
 });
 
  useEffect(() => {
-  fetch("https://backend-render-6n5z.onrender.com/students")
+  fetch("/api/students")
     .then(res => res.json())
     .then(data => {
       setState(prev => ({ ...prev, students: data }));
@@ -114,7 +114,7 @@ const [studentForm, setStudentForm] = useState({
 
  const handleLogin = async (username: string, password: string) => {
   try {
-    const res = await fetch("https://backend-render-6n5z.onrender.com/login", {
+    const res = await fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -225,7 +225,7 @@ const [studentForm, setStudentForm] = useState({
   // School CRUD
 const addSchool = async () => {
   try {
-    const res = await fetch("https://backend-render-6n5z.onrender.com/schools", {
+    const res = await fetch("/api/schools", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(schoolForm)
@@ -264,7 +264,7 @@ const addSchool = async () => {
   // Class CRUD
   const addClass = async () => {
   try {
-    const res = await fetch("https://backend-render-6n5z.onrender.com/classes", {
+    const res = await fetch("/api/classes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -314,7 +314,7 @@ const addSchool = async () => {
 
     // 🆕 If class doesn't exist → create in DB
     if (!existingClass) {
-      const resClass = await fetch("https://backend-render-6n5z.onrender.com/classes", {
+      const resClass = await fetch("/api/classes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -336,7 +336,7 @@ const addSchool = async () => {
     }
 
     // 👨‍🏫 Create teacher in DB
-    const resTeacher = await fetch("https://backend-render-6n5z.onrender.com/teachers", {
+    const resTeacher = await fetch("/api/teachers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -382,7 +382,7 @@ const deleteTeacher = async (id: string) => {
   if (!confirmDelete) return;
 
   try {
-    await fetch(`https://backend-render-6n5z.onrender.com/teachers/${id}`, {
+    await fetch(`/api/teachers/${id}`, {
       method: "DELETE"
     });
 
@@ -418,7 +418,7 @@ const addStudent = async () => {
     };
 
     // 🔥 SEND TO BACKEND
-    const res = await fetch("https://backend-render-6n5z.onrender.com/students", {
+    const res = await fetch("/api/students", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -463,7 +463,7 @@ const updateStudent = async () => {
   if (!editingItem) return;
 
   try {
-    const res = await fetch(`https://backend-render-6n5z.onrender.com/students/${editingItem.id}`, {
+    const res = await fetch(`/api/students/${editingItem.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(studentForm)
@@ -510,7 +510,7 @@ const deleteStudent = async (id: string) => {
   if (!confirmDelete) return;
 
   try {
-    await fetch(`https://backend-render-6n5z.onrender.com/students/${id}`, {
+    await fetch(`/api/students/${id}`, {
       method: "DELETE"
     });
 
